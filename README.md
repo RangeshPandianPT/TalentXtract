@@ -1,74 +1,120 @@
-# Welcome to your Lovable project
+# TalentXtract
 
-## Project info
+AI-powered keyword extraction tool for job descriptions. TalentXtract helps HR professionals and recruiters quickly identify and categorize key requirements from job postings using advanced AI technology.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Features
 
-## How can I edit this code?
+- **AI-Powered Extraction**: Leverages Google Gemini API to intelligently extract keywords
+- **Smart Categorization**: Automatically organizes keywords into 5 categories:
+  - 🎯 Mandatory: Required qualifications, certifications, experience
+  - 💻 Technical: Programming languages, frameworks, technical skills
+  - 🔧 Tools: Software tools, platforms, technologies
+  - 💝 Soft Skills: Interpersonal abilities, soft skills
+  - 👔 Role: Job titles, work arrangements, seniority levels
+- **Modern UI**: Built with React and shadcn-ui for a seamless experience
+- **Dark Mode Support**: Toggle between light and dark themes
+- **Export Options**: Copy to clipboard or export results
+- **File Upload**: Support for uploading job description files
 
-There are several ways of editing your application.
+## 🛠️ Technologies Used
 
-**Use Lovable**
+- **Frontend**: React 19.2.1 with TypeScript
+- **Build Tool**: Vite 7.2.7
+- **Styling**: Tailwind CSS + shadcn-ui components
+- **AI Integration**: Google Gemini API (gemini-2.0-flash-exp)
+- **Backend**: Supabase Functions (Deno runtime)
+- **Package Manager**: npm / Bun 1.3.4
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 📦 Installation
 
-Changes made via Lovable will be committed automatically to this repo.
+```bash
+# Clone the repository
+git clone https://github.com/RangeshPandianPT/TalentXtract.git
 
-**Use your preferred IDE**
+# Navigate to project directory
+cd TalentXtract
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Bun installed - [install Bun](https://bun.sh/docs/installation)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+# Install dependencies
+npm install
+# or with Bun
 bun install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
+npm run dev
+# or with Bun
 bun run dev
 ```
 
-**Edit a file directly in GitHub**
+## ⚙️ Configuration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Setting up Google Gemini API
 
-**Use GitHub Codespaces**
+1. Get your free API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Update the API key in `supabase/functions/extract-keywords/index.ts`
+3. The free tier includes:
+   - 15 requests per minute
+   - 1,500 requests per day
+   - No expiration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Environment Variables
 
-## What technologies are used for this project?
+Create a `.env` file in the root directory:
 
-This project is built with:
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-- Bun 1.3.4
-- Vite 7.2.7
-- TypeScript
-- React 19.2.1
-- shadcn-ui
-- Tailwind CSS
+## 🚀 Deployment
 
-## How can I deploy this project?
+### Deploy with Vercel
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-## Can I connect a custom domain to my Lovable project?
+### Deploy with Netlify
 
-Yes, you can!
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Manual Deployment
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+# Build the project
+npm run build
+
+# Preview the build
+npm run preview
+```
+
+## 📝 Usage
+
+1. Visit the application
+2. Paste or upload a job description
+3. Click "Extract Keywords"
+4. View categorized keywords
+5. Export or copy results as needed
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 👤 Author
+
+**Rangesh Pandian PT**
+
+- Email: [rangeshoandian@gmail.com](mailto:rangeshoandian@gmail.com)
+- LinkedIn: [rangeshpandian-pt](https://www.linkedin.com/in/rangeshpandian-pt-428b04325)
+- Instagram: [@_rangesh_07](https://www.instagram.com/_rangesh_07/)
+
+## 🙏 Acknowledgments
+
+- Google Gemini API for AI-powered keyword extraction
+- shadcn-ui for beautiful UI components
+- Supabase for backend infrastructure
+
+---
+
+Made with ❤️ by Rangesh Pandian PT
