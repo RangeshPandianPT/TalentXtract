@@ -41,7 +41,12 @@ export default function Index() {
     setHasExtracted(false);
     
     try {
-      const response = await fetch('http://localhost:3001/api/extract-keywords', {
+      // Use Vercel API route in production, localhost in development
+      const apiUrl = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3001/api/extract-keywords'
+        : '/api/extract-keywords';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
