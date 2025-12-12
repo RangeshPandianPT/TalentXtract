@@ -14,9 +14,11 @@ export function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            </div>
+            <img 
+              src="/favicon.png" 
+              alt="TalentXtract Logo" 
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg object-contain"
+            />
             <div>
               <h1 className="font-bold text-base sm:text-lg text-foreground tracking-tight">
                 TalentXtract
