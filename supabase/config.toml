@@ -1,0 +1,4 @@
+project_id = "vsyomewepkgkrusgtjdw"
+
+[functions.extract-keywords]
+verify_jwt = false
