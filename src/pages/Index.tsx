@@ -41,58 +41,22 @@ export default function Index() {
     setHasExtracted(false);
     
     try {
-      const GEMINI_API_KEY = 'AIzaSyCOgkVeDa4FOcvdAe2cXZ1uIXC8tRe4sKM';
-      
-      const systemPrompt = `You are an expert HR keyword extraction assistant. Analyze the job description and extract keywords into exactly 5 categories. Return ONLY a valid JSON object with no additional text or markdown.
-
-Categories:
-1. mandatory: Required qualifications, certifications, degrees, years of experience
-2. technical: Programming languages, frameworks, technical skills
-3. tools: Software tools, platforms, technologies
-4. soft: Soft skills, interpersonal abilities
-5. role: Job titles, work arrangements, seniority levels
-
-Return format:
-{
-  "mandatory": ["keyword1", "keyword2"],
-  "technical": ["keyword1", "keyword2"],
-  "tools": ["keyword1", "keyword2"],
-  "soft": ["keyword1", "keyword2"],
-  "role": ["keyword1", "keyword2"]
-}
-
-Rules:
-- Each keyword should be 1-4 words
-- Capitalize first letter of each keyword
-- Remove duplicates
-- Return empty arrays if no keywords found for a category`;
-
-      const prompt = `${systemPrompt}\n\nExtract keywords from this job description:\n\n${jobDescription.trim()}`;
-
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
+      const response = await fetch('http://localhost:3001/api/extract-keywords', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 2048,
-          }
+          jobDescription: jobDescription.trim()
         }),
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Gemini API error:', response.status, errorText);
+        const errorData = await response.json();
+        console.error('Backend error:', errorData);
         toast({
           title: "Extraction failed",
-          description: "Failed to connect to AI service. Please try again.",
+          description: errorData.error || "Failed to extract keywords. Please try again.",
           variant: "destructive",
         });
         setIsLoading(false);
@@ -100,51 +64,19 @@ Rules:
       }
 
       const data = await response.json();
-      const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!content) {
-        console.error('No content in AI response');
-        toast({
-          title: "Extraction failed",
-          description: "No response from AI. Please try again.",
-          variant: "destructive",
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      // Parse the JSON from the response
-      let extractedKeywords;
-      try {
-        // Remove markdown code blocks if present
-        const cleanContent = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-        extractedKeywords = JSON.parse(cleanContent);
-      } catch (parseError) {
-        console.error('Failed to parse AI response:', content);
-        toast({
-          title: "Extraction failed",
-          description: "Failed to parse keywords. Please try again.",
-          variant: "destructive",
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      // Validate the response structure
-      const validCategories = ['mandatory', 'technical', 'tools', 'soft', 'role'];
-      const validatedKeywords: ExtractedKeywords = {
-        mandatory: [],
-        technical: [],
-        tools: [],
-        soft: [],
-        role: []
-      };
       
-      for (const cat of validCategories) {
-        validatedKeywords[cat as keyof ExtractedKeywords] = Array.isArray(extractedKeywords[cat]) ? extractedKeywords[cat] : [];
+      if (!data.keywords) {
+        console.error('No keywords in response');
+        toast({
+          title: "Extraction failed",
+          description: "No keywords found. Please try again.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
       }
 
-      setKeywords(validatedKeywords);
+      setKeywords(data.keywords);
       setHasExtracted(true);
       toast({
         title: "Keywords extracted",
@@ -154,7 +86,7 @@ Rules:
       console.error('Error:', err);
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: "Failed to connect to backend server. Make sure it's running on port 3001.",
         variant: "destructive",
       });
     } finally {
